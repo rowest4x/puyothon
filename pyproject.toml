@@ -1,0 +1,10 @@
+[build-system]
+requires = ["setuptools>=68", "wheel", "numpy>=1.21,<3"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "puyothon"
+version = "1.0"
+description = "Python Package with a C extension for Puyo Puyo"
+requires-python = ">=3.8"
+dependencies = ["numpy>=1.21,<3"]
