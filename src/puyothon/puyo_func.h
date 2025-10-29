@@ -16,7 +16,7 @@
 #define EMPTY 0
 
 //ぷよの色数
-#define COLOR_NUM 5
+#define COLOR_NUM 4
 
 //STATE配列の状態
 #define IDLE 0

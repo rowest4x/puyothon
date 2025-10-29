@@ -58,12 +58,12 @@ int toBoard_rw(PyObject *obj, int (**board)[ROWS_NUM][COLS_NUM]) {
     return 0;
 }
 
-void toBoardForModel(int (*board)[ROWS_NUM][COLS_NUM], float (*x)[COLS_NUM-2][4]){
-    memset(x, 0, sizeof(float)*4*(ROWS_NUM-1)*(COLS_NUM-2));
+void toBoardForModel(int (*board)[ROWS_NUM][COLS_NUM], float (*x)[COLS_NUM-2][COLOR_NUM]){
+    memset(x, 0, sizeof(float)*(ROWS_NUM-1)*(COLS_NUM-2)*(COLOR_NUM));
     for (int i = 1; i < ROWS_NUM; i++) {
         for(int j = 1; j < COLS_NUM-1; j++){
             int p = board[PUYO][i][j];
-            if(1 <= p && p <= 4){
+            if(1 <= p && p <= (COLOR_NUM)){
                 x[i-1][j-1][p-1] = 1.0f;
             }
         }
@@ -85,7 +85,7 @@ static PyObject* cvtBoardForModel(PyObject *self, PyObject *args){
     }
 
     // 配列の次元とサイズを設定
-    npy_intp dims[4] = {1, ROWS_NUM-1, COLS_NUM-2, 4};
+    npy_intp dims[4] = {1, ROWS_NUM-1, COLS_NUM-2, COLOR_NUM};
     
     // NumPy配列を作成
     PyArrayObject *x = (PyArrayObject*)PyArray_SimpleNew(4, dims, NPY_FLOAT32);
@@ -96,7 +96,7 @@ static PyObject* cvtBoardForModel(PyObject *self, PyObject *args){
 
     PyArray_FILLWBYTE(x, 0);
 
-    float (*x_data)[ROWS_NUM-1][COLS_NUM-2][4] = (float (*)[ROWS_NUM-1][COLS_NUM-2][4])PyArray_DATA(x);
+    float (*x_data)[ROWS_NUM-1][COLS_NUM-2][COLOR_NUM] = (float (*)[ROWS_NUM-1][COLS_NUM-2][COLOR_NUM])PyArray_DATA(x);
 
     toBoardForModel(board, x_data[0]);
 
@@ -138,7 +138,7 @@ static PyObject* getAbleBoardsForModel(PyObject *self, PyObject *args){
     }
 
     // 配列の次元とサイズを設定
-    npy_intp result_dims[4] = {able_actions_num, ROWS_NUM-1, COLS_NUM-2, 4};
+    npy_intp result_dims[4] = {able_actions_num, ROWS_NUM-1, COLS_NUM-2, COLOR_NUM};
     npy_intp able_actions_obj_dims[1] = {able_actions_num};
     
     // NumPy配列を作成
@@ -147,7 +147,7 @@ static PyObject* getAbleBoardsForModel(PyObject *self, PyObject *args){
     if (result == NULL) {
         return PyErr_NoMemory();
     }
-    float (*result_data)[ROWS_NUM-1][COLS_NUM-2][4] = (float (*)[ROWS_NUM-1][COLS_NUM-2][4])PyArray_DATA(result);
+    float (*result_data)[ROWS_NUM-1][COLS_NUM-2][COLOR_NUM] = (float (*)[ROWS_NUM-1][COLS_NUM-2][COLOR_NUM])PyArray_DATA(result);
     int *able_actions_data = (int*)PyArray_DATA(able_actions_obj);
     for(int i = 0; i < able_actions_num; i++){
         int tmp_board_data[ARRS_NUM][ROWS_NUM][COLS_NUM];
