@@ -51,10 +51,10 @@ print(x.shape)  # (1, 14, 6, 4)
 | 関数名                                           | 説明                              |
 | --------------------------------------------- | ------------------------------- |
 | `makeBoard()`                                 | 新しい空の盤面を生成します。                  |
-| `cvtBoardForModel(board)`                     | 盤面をニューラルネット入力形式（one-hot）に変換します。 |
+| `cvtBoardForModel(board)`                     | 盤面をAI用の入力形式（one-hot）に変換します。 |
 | `getAbleBoardsForModel(board, parent, child)` | 置ける全手を列挙し、それぞれの盤面をモデル入力に変換します。  |
 | `putPuyo(board, parent, child, col, rot)`     | 指定位置にぷよを設置します。                  |
-| `fallPuyo(board)`                             | 落下処理を1ステップ行います。                 |
+| `fallPuyo(board)`                             | 落下処理を行います。                 |
 | `erasePuyo(board, chain_count)`               | 4つ以上繋がったぷよを消去します。               |
 | `chainAuto(board)`                            | 連鎖が終わるまで自動的に処理します。              |
 | `isDead(board)`                               | ゲームオーバー状態かを判定します。               |
