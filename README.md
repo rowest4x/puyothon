@@ -32,9 +32,6 @@ print(board.shape)  # (2, 15, 8)
 # ぷよを置いてみる（親ぷよ=1, 子ぷよ=1, 列=3, 回転=0）
 puyo.putPuyo(board, 1, 2, col=3, rot=0)
 
-# 落下処理
-puyo.fallPuyo(board)
-
 # 連鎖処理
 n_chain, score = puyo.chainAuto(board)
 print(f"{n_chain} chain, {score} pts")
