@@ -22,6 +22,9 @@ int canPut(int (*board)[ROWS_NUM][COLS_NUM], int col, int rot){
     //14段目に軸ぷよは設置できない
     if(rot == 2 && board[PUYO][12][col] != EMPTY) return 0;
 
+    //置きたい列が12段目まで埋まっていて、14段目も埋まっているとき、縦置きは設置できない
+    if((rot == 0 || rot == 2) && board[PUYO][12][col] != EMPTY && board[PUYO][14][col]) return 0;
+
     //ぷよを移動させる向きを求める
     //軸ぷよを1、2列目に置くなら左、4～6列目に置くなら右に移動させる必要がある（ぷよは3列目から降ってくるので）
     int way;
@@ -104,9 +107,10 @@ int putPuyo(int (*board)[ROWS_NUM][COLS_NUM], int col, int rot, int parent_puyo,
 int countNeighborPuyos(int (*board)[ROWS_NUM][COLS_NUM], int i, int j){
     int puyo = board[PUYO][i][j];
     if(puyo <= 0) return 0;
+    if(i >= ROWS_NUM - 2) return 0;
 
     int count = 0;
-    if(board[PUYO][i+1][j] == puyo) count ++;
+    if(i + 1 < ROWS_NUM - 2 && board[PUYO][i+1][j] == puyo) count ++;
     if(board[PUYO][i-1][j] == puyo) count ++;
     if(board[PUYO][i][j+1] == puyo) count ++;
     if(board[PUYO][i][j-1] == puyo) count ++;
